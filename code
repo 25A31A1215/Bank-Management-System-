@@ -1,0 +1,100 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Account {
+private:
+    int accNo;
+    string name;
+    float balance;
+
+public:
+    void createAccount() {
+        cout << "Enter Account Number: ";
+        cin >> accNo;
+        cout << "Enter Name: ";
+        cin >> name;
+        cout << "Enter Initial Balance: ";
+        cin >> balance;
+    }
+
+    void deposit() {
+        float amount;
+        cout << "Enter amount to deposit: ";
+        cin >> amount;
+        balance += amount;
+        cout << "Amount Deposited Successfully!\n";
+    }
+
+    void withdraw() {
+        float amount;
+        cout << "Enter amount to withdraw: ";
+        cin >> amount;
+        if (amount > balance) {
+            cout << "Insufficient Balance!\n";
+        } else {
+            balance -= amount;
+            cout << "Withdrawal Successful!\n";
+        }
+    }
+
+    void display() {
+        cout << "\nAccount No: " << accNo;
+        cout << "\nName: " << name;
+        cout << "\nBalance: " << balance << endl;
+    }
+
+    int getAccNo() {
+        return accNo;
+    }
+};
+
+int main() {
+    vector<Account> accounts;
+    int choice;
+
+    do {
+        cout << "\n--- BANK MANAGEMENT SYSTEM ---\n";
+        cout << "1. Create Account\n";
+        cout << "2. Deposit\n";
+        cout << "3. Withdraw\n";
+        cout << "4. Display All Accounts\n";
+        cout << "5. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            Account acc;
+            acc.createAccount();
+            accounts.push_back(acc);
+        }
+        else if (choice == 2) {
+            int accNo;
+            cout << "Enter Account Number: ";
+            cin >> accNo;
+            for (auto &acc : accounts) {
+                if (acc.getAccNo() == accNo) {
+                    acc.deposit();
+                }
+            }
+        }
+        else if (choice == 3) {
+            int accNo;
+            cout << "Enter Account Number: ";
+            cin >> accNo;
+            for (auto &acc : accounts) {
+                if (acc.getAccNo() == accNo) {
+                    acc.withdraw();
+                }
+            }
+        }
+        else if (choice == 4) {
+            for (auto &acc : accounts) {
+                acc.display();
+            }
+        }
+
+    } while (choice != 5);
+
+    return 0;
+}
